@@ -3,27 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberAcademy | Hacker's Journey</title>
+    <title>Web App Hacking | CyberAcademy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* CSS Variables */
-        :root {
-            --dark-bg: #000;
-            --matrix-green: #00ff00;
-            --neon-green: #39ff14;
-        }
-
-        /* General Reset */
-        body {
-            margin: 0;
-            font-family: 'Courier New', monospace;
-            background: var(--dark-bg);
-            color: var(--matrix-green);
-            overflow: hidden;
-        }
-
         /* Header */
-        header {
+                header {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -81,114 +65,61 @@
                 opacity: 0.8;
             }
         }
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #00ff00;
+            overflow-x: hidden;
+        }
 
-        /* Login Overlay */
-        .login-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+        /* Centered Image */
+        .center-image {
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            margin-top: 2rem;
         }
 
-        .login-box {
-            background: var(--dark-bg);
-            border: 2px solid var(--matrix-green);
-            padding: 2rem;
+        .center-image img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #00ff00;
+        }
+
+        /* Dropdown Section */
+        .dropdown-section {
             text-align: center;
-            box-shadow: 0 0 20px var(--matrix-green);
-            max-width: 400px;
-            width: 100%;
+            margin-top: 2rem;
         }
 
-        .login-box h2 {
-            margin-bottom: 1.5rem;
-            color: var(--matrix-green);
-        }
-
-        .login-box input {
-            width: 100%;
+        .dropdown-section select {
             padding: 0.5rem;
-            margin: 0.5rem 0;
+            margin: 0.5rem;
             background: transparent;
-            border: 1px solid var(--matrix-green);
-            color: var(--matrix-green);
-        }
-
-        .login-box button {
-            padding: 0.5rem 1rem;
-            margin-top: 1rem;
-            background: var(--matrix-green);
-            border: none;
-            color: var(--dark-bg);
+            border: 1px solid #00ff00;
+            color: #00ff00;
             cursor: pointer;
         }
 
-        .login-box button:hover {
-            background: var(--neon-green);
-        }
-
-        .error-message {
-            color: red;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        /* Main Content */
-        .main-content {
-            display: none;
-        }
-
-        /* Terminal */
-        .terminal {
+        /* Material Display */
+        .material-display {
             margin-top: 2rem;
-        }
-
-        .blinking-cursor {
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Course Grid */
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .course-card {
-            background: var(--dark-bg);
-            border: 1px solid var(--matrix-green);
+            text-align: center;
             padding: 1rem;
-            text-align: center;
-            cursor: pointer;
+            border: 1px solid #00ff00;
+            background: rgba(0, 255, 0, 0.1);
         }
 
-        .course-card:hover {
-            background: var(--matrix-green);
-            color: var(--dark-bg);
+        .material-display h3 {
+            margin-bottom: 1rem;
         }
 
-        footer {
-            text-align: center;
-            margin-top: 2rem;
+        .material-display p {
+            margin: 0.5rem 0;
         }
-
-        footer .social-links a {
-            margin: 0 0.5rem;
-            color: var(--matrix-green);
-            text-decoration: none;
-        }
+        
     </style>
 </head>
 <body>
