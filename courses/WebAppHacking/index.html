@@ -14,7 +14,7 @@
             color: #00ff00;
             overflow-x: hidden;
         }
-        /* Header */
+ /* Header */
         header {
             display: flex;
             justify-content: center;
@@ -73,7 +73,6 @@
                 opacity: 0.8;
             }
         }
-
         /* Centered Image */
         .center-image {
             display: flex;
@@ -162,7 +161,7 @@
 
     <!-- Centered Image -->
     <div class="center-image">
-        <img src="web.jpg" alt="Web App Hacking">
+        <img src="web.png" alt="Web App Hacking">
     </div>
 
     <!-- Dropdown Section -->
@@ -199,16 +198,12 @@
         const courseOutline = {
             "1": {
                 "1": "Introduction to Cybersecurity, VirtualBox & Kali Linux Basics",
-                "2": "Linux Essentials – Commands, File System & Permissions<ul>
-    <li><a href="https://youtu.be/oGj5JBBQLHs" target="_blank">Video 1</a></li>
-    <li><a href="https://youtu.be/lQi7fxVO7Zo" target="_blank">Video 2</a></li>
-    <li><a href="https://youtu.be/YOUR_VIDEO_3_LINK" target="_blank">Video 3</a></li>
-</ul>",
+                "2": "Linux Essentials – Commands, File System & Permissions",
                 "3": "Networking Basics – OSI Model, TCP/UDP, Ports & Protocols",
                 "4": "Wireshark Basics – Capturing & Analyzing Network Traffic",
                 "5": "Google Dorking & OSINT – Finding Sensitive Data Online",
                 "6": "Information Gathering – Whois, Nslookup, Subdomain Enumeration",
-                "7": "OWASP Top 10 Overview – Understanding Common Web Vulnerabilities<ul><li>Video 1</li><li>Video 2</li><li>Video 3</li></ul>"
+                "7": "OWASP Top 10 Overview – Understanding Common Web Vulnerabilities<ul><li><a href='https://youtu.be/lQi7fxVO7Zo'>Video 1</a></li><li><a href='https://example.com/video2'>Video 2</a></li><li><a href='https://example.com/video3'>Video 3</a></li></ul>"
             },
             "2": {
                 "8": "Introduction to Burp Suite – Intercepting & Modifying Requests",
@@ -274,12 +269,13 @@
                 selectedWeek = week;
                 selectedDay = day;
                 const material = courseOutline[week][day];
+                const mainContent = material.split('<ul>')[0]; // Main description
+                const hiddenContent = material.includes('<ul>') ? `<ul>${material.split('<ul>')[1]}` : ''; // Hidden part
+
                 materialDisplay.innerHTML = `
                     <h3>Week ${week}, Day ${day}</h3>
-                    <p>${material.split('<ul>')[0]}</p>
-                    <div class="hidden-material" id="hiddenMaterial">
-                        ${material.includes('<ul>') ? material.split('<ul>')[1] : ''}
-                    </div>
+                    <p>${mainContent}</p>
+                    <div class="hidden-material" id="hiddenMaterial">${hiddenContent}</div>
                 `;
                 passwordInput.style.display = 'block';
             } else {
