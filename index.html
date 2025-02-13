@@ -6,7 +6,22 @@
     <title>CyberAcademy | Hacker's Journey</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Add this new CSS for the login form */
+        /* CSS Variables */
+        :root {
+            --dark-bg: #000;
+            --matrix-green: #00ff00;
+            --neon-green: #39ff14;
+        }
+
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            background: var(--dark-bg);
+            color: var(--matrix-green);
+        }
+
+        /* Login Overlay */
         .login-overlay {
             position: fixed;
             top: 0;
@@ -42,7 +57,6 @@
             background: transparent;
             border: 1px solid var(--matrix-green);
             color: var(--matrix-green);
-            font-family: 'Courier New', monospace;
         }
 
         .login-box button {
@@ -52,7 +66,6 @@
             border: none;
             color: var(--dark-bg);
             cursor: pointer;
-            font-family: 'Courier New', monospace;
         }
 
         .login-box button:hover {
@@ -65,15 +78,60 @@
             display: none;
         }
 
-        /* Hide the main content initially */
+        /* Main Content */
         .main-content {
             display: none;
+        }
+
+        .terminal {
+            margin-top: 2rem;
+        }
+
+        .blinking-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Course Grid */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .course-card {
+            background: var(--dark-bg);
+            border: 1px solid var(--matrix-green);
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            background: var(--matrix-green);
+            color: var(--dark-bg);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        footer .social-links a {
+            margin: 0 0.5rem;
+            color: var(--matrix-green);
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <!-- Login Overlay -->
-    <div class="login-overlay" id="loginOverlay">
+    <div class="login-overlay" id="loginOverlay" aria-hidden="false">
         <div class="login-box">
             <h2>Access Restricted</h2>
             <p>Enter your credentials to proceed:</p>
@@ -84,47 +142,39 @@
         </div>
     </div>
 
-    <!-- Main Content (Hidden Initially) -->
-    <div class="main-content" id="mainContent">
-        <div class="matrix-bg" id="matrixEffect"></div>
-
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent" aria-hidden="true">
         <header class="glitch-container">
             <a href="/" style="text-decoration: none; color: inherit;">
                 <h1 class="glitch">CyberAcademy</h1>
             </a>
             <p>[>] Initiate Your Hacker Journey</p>
         </header>
-
         <div class="terminal">
             <p>> Initializing system protocols...</p>
             <p>> Accessing cyber modules...</p>
-            <p>> Welcome, {username}</p>
+            <p id="welcomeMessage">Welcome, Guest</p>
             <p id="typingEffect"></p>
             <span class="blinking-cursor">_</span>
         </div>
-
         <nav class="course-grid">
             <div class="course-card" onclick="location.href='/courses/networking'">
                 <h3><i class="fas fa-network-wired"></i> Network Warfare</h3>
                 <p>Master network penetration and defense</p>
             </div>
-            
             <div class="course-card" onclick="location.href='/courses/cryptography'">
                 <h3><i class="fas fa-lock"></i> Cryptography</h3>
                 <p>Encryption/Decryption techniques</p>
             </div>
-
             <div class="course-card" onclick="location.href='/courses/forensics'">
                 <h3><i class="fas fa-search"></i> Digital Forensics</h3>
                 <p>Cyber investigation techniques</p>
             </div>
-
             <div class="course-card" onclick="location.href='/courses/malware'">
                 <h3><i class="fas fa-biohazard"></i> Malware Analysis</h3>
                 <p>Reverse engineering & protection</p>
             </div>
         </nav>
-
         <footer>
             <div class="social-links">
                 <a href="#"><i class="fab fa-github"></i></a>
@@ -138,11 +188,17 @@
     <script>
         // Login Logic
         function checkCredentials() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
             const errorMessage = document.getElementById('errorMessage');
 
+            // Hide error message initially
+            errorMessage.style.display = 'none';
+
             if (username === 'bani' && password === 'na_bani') {
+                // Update welcome message with username
+                document.getElementById('welcomeMessage').innerText = `Welcome, ${username}`;
+
                 // Hide login overlay and show main content
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'block';
@@ -152,18 +208,16 @@
             }
         }
 
-        // Matrix background effect
+        // Matrix Background Effect
         const matrix = () => {
             const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()";
-            const matrixEffect = document.getElementById('matrixEffect');
-            
             setInterval(() => {
-                matrixEffect.innerHTML = chars[Math.floor(Math.random() * chars.length)];
+                document.getElementById('matrixEffect').innerHTML = chars[Math.floor(Math.random() * chars.length)];
             }, 50);
-        }
+        };
         matrix();
 
-        // Terminal typing effect
+        // Terminal Typing Effect
         const terminalText = "Ready to hack the mainframe?";
         let i = 0;
         const typing = () => {
@@ -172,7 +226,7 @@
                 i++;
                 setTimeout(typing, 50);
             }
-        }
+        };
         typing();
     </script>
 </body>
