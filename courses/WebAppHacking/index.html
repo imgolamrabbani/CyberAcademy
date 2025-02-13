@@ -6,8 +6,16 @@
     <title>Web App Hacking | CyberAcademy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #00ff00;
+            overflow-x: hidden;
+        }
         /* Header */
-                header {
+        header {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -65,14 +73,6 @@
                 opacity: 0.8;
             }
         }
-        /* General Reset */
-        body {
-            margin: 0;
-            font-family: 'Courier New', monospace;
-            background: #000;
-            color: #00ff00;
-            overflow-x: hidden;
-        }
 
         /* Centered Image */
         .center-image {
@@ -119,7 +119,37 @@
         .material-display p {
             margin: 0.5rem 0;
         }
-        
+
+        /* Password Input */
+        .password-input {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .password-input input {
+            padding: 0.5rem;
+            margin: 0.5rem;
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+        }
+
+        .password-input button {
+            padding: 0.5rem 1rem;
+            background: #00ff00;
+            border: none;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .password-input button:hover {
+            background: #39ff14;
+        }
+
+        /* Hidden Content */
+        .hidden-material {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -158,6 +188,12 @@
         <p>Select a week and day to view materials.</p>
     </div>
 
+    <!-- Password Input -->
+    <div class="password-input" id="passwordInput" style="display: none;">
+        <input type="password" id="unlockCode" placeholder="Enter Code to Unlock Materials">
+        <button onclick="unlockMaterials()">Unlock</button>
+    </div>
+
     <script>
         // Course Outline Data
         const courseOutline = {
@@ -168,7 +204,7 @@
                 "4": "Wireshark Basics – Capturing & Analyzing Network Traffic",
                 "5": "Google Dorking & OSINT – Finding Sensitive Data Online",
                 "6": "Information Gathering – Whois, Nslookup, Subdomain Enumeration",
-                "7": "OWASP Top 10 Overview – Understanding Common Web Vulnerabilities."
+                "7": "OWASP Top 10 Overview – Understanding Common Web Vulnerabilities<ul><li>Video 1</li><li>Video 2</li><li>Video 3</li></ul>"
             },
             "2": {
                 "8": "Introduction to Burp Suite – Intercepting & Modifying Requests",
@@ -203,6 +239,9 @@
             }
         };
 
+        let selectedWeek = null;
+        let selectedDay = null;
+
         // Update Days Dropdown Based on Selected Week
         function updateDays() {
             const week = document.getElementById('weekDropdown').value;
@@ -225,18 +264,38 @@
             const week = document.getElementById('weekDropdown').value;
             const day = document.getElementById('dayDropdown').value;
             const materialDisplay = document.getElementById('materialDisplay');
+            const passwordInput = document.getElementById('passwordInput');
 
             if (week && day) {
+                selectedWeek = week;
+                selectedDay = day;
                 const material = courseOutline[week][day];
                 materialDisplay.innerHTML = `
                     <h3>Week ${week}, Day ${day}</h3>
-                    <p>${material}</p>
+                    <p>${material.split('<ul>')[0]}</p>
+                    <div class="hidden-material" id="hiddenMaterial">
+                        ${material.includes('<ul>') ? material.split('<ul>')[1] : ''}
+                    </div>
                 `;
+                passwordInput.style.display = 'block';
             } else {
                 materialDisplay.innerHTML = `
                     <h3>Course Materials</h3>
                     <p>Select a week and day to view materials.</p>
                 `;
+                passwordInput.style.display = 'none';
+            }
+        }
+
+        // Unlock Materials with Code
+        function unlockMaterials() {
+            const enteredCode = document.getElementById('unlockCode').value.trim();
+            const hiddenMaterial = document.getElementById('hiddenMaterial');
+
+            if (enteredCode === 'alabu') {
+                hiddenMaterial.style.display = 'block';
+            } else {
+                alert('Invalid code! Please try again.');
             }
         }
     </script>
