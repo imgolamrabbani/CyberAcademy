@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web App Hacking | CyberAcademy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #00ff00;
+            overflow-x: hidden;
+        }
+
+        /* Centered Image */
+        .center-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .center-image img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #00ff00;
+        }
+
+        /* Dropdown Section */
+        .dropdown-section {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .dropdown-section select {
+            padding: 0.5rem;
+            margin: 0.5rem;
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            cursor: pointer;
+        }
+
+        /* Material Display */
+        .material-display {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            border: 1px solid #00ff00;
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .material-display h3 {
+            margin-bottom: 1rem;
+        }
+
+        .material-display p {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="glitch-container">
+            <a href="https://imgolamrabbani.github.io/CyberAcademy/" class="glitch" data-text="CyberAcademy">CyberAcademy</a>
+        </div>
+    </header>
+
+    <!-- Centered Image -->
+    <div class="center-image">
+        <img src="web.png" alt="Web App Hacking">
+    </div>
+
+    <!-- Dropdown Section -->
+    <div class="dropdown-section">
+        <h2>Select Week and Day</h2>
+        <select id="weekDropdown" onchange="updateDays()">
+            <option value="">Select Week</option>
+            <option value="1">Week 1</option>
+            <option value="2">Week 2</option>
+            <option value="3">Week 3</option>
+            <option value="4">Week 4</option>
+            <option value="5">Week 5</option>
+        </select>
+
+        <select id="dayDropdown" onchange="displayMaterial()">
+            <option value="">Select Day</option>
+        </select>
+    </div>
+
+    <!-- Material Display -->
+    <div class="material-display" id="materialDisplay">
+        <h3>Course Materials</h3>
+        <p>Select a week and day to view materials.</p>
+    </div>
+
+    <script>
+        // Course Outline Data
+        const courseOutline = {
+            "1": {
+                "1": "Introduction to Cybersecurity, VirtualBox & Kali Linux Basics",
+                "2": "Linux Essentials – Commands, File System & Permissions",
+                "3": "Networking Basics – OSI Model, TCP/UDP, Ports & Protocols",
+                "4": "Wireshark Basics – Capturing & Analyzing Network Traffic",
+                "5": "Google Dorking & OSINT – Finding Sensitive Data Online",
+                "6": "Information Gathering – Whois, Nslookup, Subdomain Enumeration",
+                "7": "OWASP Top 10 Overview – Understanding Common Web Vulnerabilities"
+            },
+            "2": {
+                "8": "Introduction to Burp Suite – Intercepting & Modifying Requests",
+                "9": "Broken Access Control – Understanding & Exploiting Access Flaws",
+                "10": "Cryptographic Failures – Weak Encryption & Data Exposure",
+                "11": "SQL Injection – Understanding & Exploiting SQLi",
+                "12": "SQL Injection Labs – Hands-on Practical Challenges",
+                "13": "SQLMap – Automating SQL Injection Attacks",
+                "14": "HTML Injection – Manipulating Web Applications"
+            },
+            "3": {
+                "15": "Cross-Site Scripting (XSS) – Reflected, Stored & DOM-Based Attacks",
+                "16": "XSS Labs – Hands-on Practical Attacks",
+                "17": "XML External Entity (XXE) Attacks – File Disclosure & SSRF",
+                "18": "Insecure Design & Security Misconfigurations",
+                "19": "Exploiting Vulnerable & Outdated Components",
+                "20": "Authentication Failures – Session Hijacking & Credential Attacks"
+            },
+            "4": {
+                "21": "Software Data & Integrity Failures – Code Injection Risks",
+                "22": "Security Logging & Monitoring Failures – Log Tampering & Evasion",
+                "23": "Server-Side Request Forgery (SSRF) – Attacking Internal Services",
+                "24": "Local & Remote File Inclusion (LFI & RFI)",
+                "25": "Business Logic Flaws – Bypassing Security Controls",
+                "26": "CSRF & IDOR – Exploiting Hidden Vulnerabilities",
+                "27": "Path Traversal – Gaining Access to Restricted Files"
+            },
+            "5": {
+                "28": "Reconnaissance Tools – Amass, Nuclei, Subfinder, & More",
+                "29": "Bug Report Writing – Writing Professional Reports for Bounty Programs",
+                "30": "Certification, Career Advice & Next Steps in Cybersecurity"
+            }
+        };
+
+        // Update Days Dropdown Based on Selected Week
+        function updateDays() {
+            const week = document.getElementById('weekDropdown').value;
+            const dayDropdown = document.getElementById('dayDropdown');
+            dayDropdown.innerHTML = '<option value="">Select Day</option>';
+
+            if (week) {
+                const days = Object.keys(courseOutline[week]);
+                days.forEach(day => {
+                    const option = document.createElement('option');
+                    option.value = day;
+                    option.textContent = `Day ${day}`;
+                    dayDropdown.appendChild(option);
+                });
+            }
+        }
+
+        // Display Material Based on Selected Week and Day
+        function displayMaterial() {
+            const week = document.getElementById('weekDropdown').value;
+            const day = document.getElementById('dayDropdown').value;
+            const materialDisplay = document.getElementById('materialDisplay');
+
+            if (week && day) {
+                const material = courseOutline[week][day];
+                materialDisplay.innerHTML = `
+                    <h3>Week ${week}, Day ${day}</h3>
+                    <p>${material}</p>
+                `;
+            } else {
+                materialDisplay.innerHTML = `
+                    <h3>Course Materials</h3>
+                    <p>Select a week and day to view materials.</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
