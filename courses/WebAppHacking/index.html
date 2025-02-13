@@ -3,62 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web App Hacking | CyberAcademy</title>
+    <title>CyberAcademy | Hacker's Journey</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* CSS Variables */
+        :root {
+            --dark-bg: #000;
+            --matrix-green: #00ff00;
+            --neon-green: #39ff14;
+        }
+
         /* General Reset */
         body {
             margin: 0;
             font-family: 'Courier New', monospace;
-            background: #000;
-            color: #00ff00;
-            overflow-x: hidden;
+            background: var(--dark-bg);
+            color: var(--matrix-green);
+            overflow: hidden;
         }
 
-        /* Centered Image */
-        .center-image {
+        /* Header */
+        header {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 2rem;
+            height: 80px;
+            background: var(--dark-bg);
+            border-bottom: 2px solid var(--matrix-green);
         }
 
-        .center-image img {
-            max-width: 100%;
-            height: auto;
-            border: 2px solid #00ff00;
-        }
-
-        /* Dropdown Section */
-        .dropdown-section {
+        header .glitch-container {
+            position: relative;
             text-align: center;
-            margin-top: 2rem;
         }
 
-        .dropdown-section select {
+        header .glitch {
+            font-size: 2rem;
+            color: var(--matrix-green);
+            text-decoration: none;
+            position: relative;
+            animation: flicker 1.5s infinite alternate;
+        }
+
+        header .glitch::before,
+        header .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: var(--neon-green);
+            clip-path: polygon(0 0, 100% 0, 100% 20%, 0 20%);
+            animation: glitch 2s infinite linear alternate-reverse;
+        }
+
+        header .glitch::after {
+            color: red;
+            clip-path: polygon(0 80%, 100% 80%, 100% 100%, 0 100%);
+            animation: glitch 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translateX(-5px);
+            }
+            100% {
+                transform: translateX(5px);
+            }
+        }
+
+        @keyframes flicker {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.8;
+            }
+        }
+
+        /* Login Overlay */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background: var(--dark-bg);
+            border: 2px solid var(--matrix-green);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 0 20px var(--matrix-green);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-box h2 {
+            margin-bottom: 1.5rem;
+            color: var(--matrix-green);
+        }
+
+        .login-box input {
+            width: 100%;
             padding: 0.5rem;
-            margin: 0.5rem;
+            margin: 0.5rem 0;
             background: transparent;
-            border: 1px solid #00ff00;
-            color: #00ff00;
+            border: 1px solid var(--matrix-green);
+            color: var(--matrix-green);
+        }
+
+        .login-box button {
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            background: var(--matrix-green);
+            border: none;
+            color: var(--dark-bg);
             cursor: pointer;
         }
 
-        /* Material Display */
-        .material-display {
+        .login-box button:hover {
+            background: var(--neon-green);
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: none;
+        }
+
+        /* Terminal */
+        .terminal {
             margin-top: 2rem;
-            text-align: center;
+        }
+
+        .blinking-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Course Grid */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .course-card {
+            background: var(--dark-bg);
+            border: 1px solid var(--matrix-green);
             padding: 1rem;
-            border: 1px solid #00ff00;
-            background: rgba(0, 255, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
         }
 
-        .material-display h3 {
-            margin-bottom: 1rem;
+        .course-card:hover {
+            background: var(--matrix-green);
+            color: var(--dark-bg);
         }
 
-        .material-display p {
-            margin: 0.5rem 0;
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        footer .social-links a {
+            margin: 0 0.5rem;
+            color: var(--matrix-green);
+            text-decoration: none;
         }
     </style>
 </head>
